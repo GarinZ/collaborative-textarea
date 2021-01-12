@@ -3,7 +3,7 @@ env:
   es2020: true
 extends:
   - 'plugin:react/recommended'
-  - airbnb
+  # - airbnb
 parserOptions:
   ecmaFeatures:
     jsx: true
