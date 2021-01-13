@@ -291,8 +291,8 @@ var EditorClient = (function () {
 
   EditorClient.prototype.applyOperation = function (operation) {
     this.editorAdapter.applyOperation(operation);
-    this.updateSelection();
-    this.undoManager.transform(new WrappedOperation(operation, null));
+    // this.updateSelection();
+    // this.undoManager.transform(new WrappedOperation(operation, null));
   };
 
   function rgb2hex (r, g, b) {
