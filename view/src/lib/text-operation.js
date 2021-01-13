@@ -542,4 +542,7 @@ ot.TextOperation = (function () {
 
 }());
 
-export default ot.TextOperation;
+// Export for CommonJS
+if (typeof module === 'object') {
+  module.exports = ot.TextOperation;
+}

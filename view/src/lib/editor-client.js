@@ -1,6 +1,7 @@
 /*global ot */
+var ot = require('./');
 
-ot.EditorClient = (function () {
+var EditorClient = (function () {
   'use strict';
 
   var Client = ot.Client;
@@ -344,3 +345,8 @@ ot.EditorClient = (function () {
 
   return EditorClient;
 }());
+
+// Export for CommonJS
+if (typeof module === 'object') {
+  module.exports = EditorClient;
+}

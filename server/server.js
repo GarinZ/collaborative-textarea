@@ -11,8 +11,8 @@ var app = express();
 var appServer = http.Server(app);
 
 app.use(morgan('combined'));
-app.use('/', serveStatic(path.join(__dirname, '../../public')));
-app.use('/static', serveStatic(path.join(__dirname, '../../public')));
+// app.use('/', serveStatic(path.join(__dirname, '../../public')));
+// app.use('/static', serveStatic(path.join(__dirname, '../../public')));
 if (process.env.NODE_ENV === 'development') {
   app.use(errorhandler());
 }

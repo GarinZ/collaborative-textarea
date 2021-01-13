@@ -40,13 +40,13 @@ function extend (target, source) {
  */
 EditorSocketIOServer.prototype.addClient = function (socket) {
   var self = this;
+  socket.join(this.docId);
+  socket.emit('doc', {
+    str: this.document,
+    revision: this.operations.length,
+    clients: this.users
+  });
   socket
-    .join(this.docId)
-    .emit('doc', {
-      str: this.document,
-      revision: this.operations.length,
-      clients: this.users
-    })
     .on('operation', function (revision, operation, selection) {
       self.mayWrite(socket, function (mayWrite) {
         if (!mayWrite) {

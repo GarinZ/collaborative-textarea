@@ -1,5 +1,8 @@
 /*global ot */
-
+if (typeof ot === 'undefined') {
+  // Export for browsers
+  var ot = {};
+}
 ot.SocketIOAdapter = (function () {
   'use strict';
 
@@ -48,3 +51,8 @@ ot.SocketIOAdapter = (function () {
   return SocketIOAdapter;
 
 }());
+
+// Export for CommonJS
+if (typeof module === 'object') {
+  module.exports = ot.SocketIOAdapter;
+}
