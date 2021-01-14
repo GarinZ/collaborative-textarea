@@ -98,7 +98,8 @@ EditorSocketIOServer.prototype.onOperation = function (socket, revision, operati
 
   try {
     var clientId = socket.id;
-    // 是因为nodejs的线程模型因此在这里不需要加锁吗？因为不存在真正并发的变量共享
+    // nodejs采用协同式线程调度，进程中只存在一个内核线程，不存在真正的并发，所以不用加锁
+    // 如果用Java实现，这里需要加锁
     var wrappedPrime = this.receiveOperation(revision, wrapped);
     console.log("new operation: " + wrapped);
     this.getClient(clientId).selection = wrappedPrime.meta;
@@ -127,6 +128,7 @@ EditorSocketIOServer.prototype.setName = function (socket, name) {
   var clientId = socket.id;
   this.getClient(clientId).name = name;
   socket.broadcast['in'](this.docId).emit('set_name', clientId, name);
+  return clientId
 };
 
 EditorSocketIOServer.prototype.getClient = function (clientId) {

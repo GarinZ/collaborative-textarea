@@ -69,6 +69,21 @@ TextAreaAdapter.prototype.onChange = function(oldValue, newValue, pendingOperati
     this.callbacks['change'](textOperation, inverse);
 }
 
+TextAreaAdapter.prototype.addClient = function(clientId, clientName) {
+  this.dispatch({
+    type: 'textArea/addClient',
+    payload: {clientId, clientName}
+  });
+}
+
+TextAreaAdapter.prototype.removeClient = function(clientId) {
+  this.dispatch({
+    type: 'textArea/removeClient',
+    payload: clientId
+  });
+}
+
+
 /**
  * not in use
  * @param {*} textOperation 

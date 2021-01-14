@@ -15,6 +15,7 @@ ot.SocketIOAdapter = (function () {
         self.trigger('client_left', clientId);
       })
       .on('set_name', function (clientId, name) {
+        console.log('rec');
         self.trigger('set_name', clientId, name);
       })
       .on('ack', function () { self.trigger('ack'); })

@@ -10,12 +10,21 @@ const webSocketMiddleware = storeAPI =>  {
     .on('doc', ({str, revision, clients}) => {
       const editorClient = new EditorClient(revision, clients, new SocketIOAdapter(socket), textAreaAdapter);
       dispatch({
-          type : 'textArea/registerClient',
-          payload : {str, revision, clients}
+          type: 'textArea/registerClient',
+          payload: {str, revision, clients}
         }
       );
     })
-    .on('logged_in', function() {});
+    .on('logged_in', function({clientId, clientName}) {
+      dispatch({
+        type: 'textArea/updateIsLogin',
+        payload: true
+      });
+      dispatch({
+        type: 'textArea/addClient',
+        payload: {clientId, self: true, clientName}
+      });
+    });
 
   return next => action => {
     // TODO: split actionType and reducer to another file

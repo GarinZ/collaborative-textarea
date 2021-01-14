@@ -138,7 +138,11 @@ var EditorClient = (function () {
     // 这些事件是通过{@line socketio-adapter.js}注册的，用来响应服务端的socket通信
     this.serverAdapter.registerCallbacks({
       client_left: function (clientId) { self.onClientLeft(clientId); },
-      set_name: function (clientId, name) { self.getClientObject(clientId).setName(name); },
+      set_name: function (clientId, name) { 
+        self.editorAdapter.addClient(clientId, name);
+        // new client add (self-including)
+        self.getClientObject(clientId).setName(name); 
+      },
       ack: function () { self.serverAck(); },
       operation: function (operation) {
         self.applyServer(TextOperation.fromJSON(operation));
@@ -218,6 +222,7 @@ var EditorClient = (function () {
     console.log("User disconnected: " + clientId);
     var client = this.clients[clientId];
     if (!client) { return; }
+    this.editorAdapter.removeClient(clientId);
     client.remove();
     delete this.clients[clientId];
   };

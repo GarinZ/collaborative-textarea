@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateValue, updateSelection, updateIsBlockSync, updateShadowValue, updateUserName } from './textAreaSlice';
 import { Input, Button, message } from 'antd';
+import UserName from './UserName';
 
 const TextArea = Input.TextArea;
 
 export default function CollaporativeTextArea() {
   let textAreaRef = null;
   const dispatch = useDispatch();
-  const {value, isBlockSync, userName} = useSelector(state => state.textArea);
+  const {value, isBlockSync, userName, isLogin} = useSelector(state => state.textArea);
 
   const dispatchShadowValue = (dispatch, newValue) => {
     dispatch({
@@ -40,7 +41,7 @@ export default function CollaporativeTextArea() {
     dispatch(updateUserName(e.target.value));
   };
 
-  const onButtonClick = (e) => {
+  const onConfirm = (e) => {
     if (userName === "") {
       message.info("请输入用户名");
       return;
@@ -52,15 +53,20 @@ export default function CollaporativeTextArea() {
 
   return (
     <div>
-      <Input value={userName} onChange={onInputChange} />
-      <Button onClick={onButtonClick}>确定</Button>
-      <TextArea
-        style={{width: 534, height: 254}}
-        ref={(ref) => textAreaRef = ref}
-        onCompositionStart={onTextAreaChange}
-        onCompositionEnd={onTextAreaChange}
-        onChange={onTextAreaChange}
-        value={value} />
+      <UserName userName={userName} onChange={onInputChange} onConfirm={onConfirm} isLogin={isLogin}/>
+      {
+        isLogin
+        ? (
+          <TextArea
+            style={{width: 534, height: 254}}
+            ref={(ref) => textAreaRef = ref}
+            onCompositionStart={onTextAreaChange}
+            onCompositionEnd={onTextAreaChange}
+            onChange={onTextAreaChange}
+            value={value} />
+        )
+        : null
+      }
     </div>
   );
 }

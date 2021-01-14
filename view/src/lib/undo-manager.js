@@ -12,7 +12,7 @@ ot.UndoManager = (function () {
 
   // Create a new UndoManager with an optional maximum history size.
   function UndoManager (maxItems) {
-    this.maxItems  = maxItems || 50;
+    this.maxItems  = maxItems || 50; // undo调用栈的大小
     this.state = NORMAL_STATE;
     this.dontCompose = false;
     this.undoStack = [];
@@ -22,7 +22,7 @@ ot.UndoManager = (function () {
   // Add an operation to the undo or redo stack, depending on the current state
   // of the UndoManager. The operation added must be the inverse of the last
   // edit. When `compose` is true, compose the operation with the last operation
-  // unless the last operation was alread pushed on the redo stack or was hidden
+  // unless the last operation was already pushed on the redo stack or was hidden
   // by a newer operation on the undo stack.
   UndoManager.prototype.add = function (operation, compose) {
     if (this.state === UNDOING_STATE) {

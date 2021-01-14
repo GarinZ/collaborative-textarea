@@ -36,8 +36,10 @@ io.sockets.on('connection', function (socket) {
         return;
       }
       socket.mayEdit = true;
-      socketIOServer.setName(socket, obj.name);
-      socket.emit('logged_in', {});
+      // setName函数内会进行广播
+      const clientName = obj.name;
+      const clientId = socketIOServer.setName(socket, obj.name);
+      socket.emit('logged_in', {clientId, clientName});
     });
   });
   

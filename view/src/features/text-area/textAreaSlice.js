@@ -1,8 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { notification } from 'antd';
+
+const buildNotificationTpl = (userName, action) => (
+  {
+    message: `${userName} ${action}`
+  }
+);
 
 export const textAreaSlice = createSlice({
   name: 'textArea',
   initialState: {
+    isLogin: false,
     userName: '', // 用户名
     value: '',  // View中展示的文本
     shadowValue: '', // 排除了输入法拼音的文本，用于做diff
@@ -10,6 +18,7 @@ export const textAreaSlice = createSlice({
     selectionEnd: 0,
     isBlockSync: false,
     revision: 0,
+    clients: {},
     pendingOperationQueue: [] // 在中文输入过程中同步到的operation暂时放在Queue中
   },
   reducers: {
@@ -49,23 +58,25 @@ export const textAreaSlice = createSlice({
     },
     addPendingOperation: (state, action) => {
       state.pendingOperationQueue.push(action.payload);
+    },
+    updateIsLogin: (state, action) => {
+      state.isLogin = action.payload;
+    },
+    addClient: (state, action) => {
+      const {clientId, clientName, self = false} = action.payload;
+      state.clients[clientId] = {clientName, self};
+
+      if (!self) {
+        notification.info(buildNotificationTpl(clientName, 'entered'));
+      }
+    },
+    removeClient: (state, action) => {
+      const clientName = state.clients[action.payload].clientName;
+      notification.info(buildNotificationTpl(clientName, 'left'));
+      delete state.clients[action.payload];
     }
   },
 });
-
-// adapter中发送一个事件，下面这一段放在middleware中？
-export const applyOperation = (operation) => (dispatch, getState) => {
-  const {isBlockSync, value, shadowValue} = getState().textArea;
-  if (!isBlockSync) {
-    // case1: 非中文输入中
-    const newValue = operation.apply(operation);
-    dispatch(updateValue(newValue));
-    dispatch(updateShadowValue(newValue));
-    return;
-  }
-  // case2: 中文输入中
-  dispatch(addPendingOperation(operation));
-};
 
 export const { updateValue, updateSelection, updateIsBlockSync, updateShadowValue, updateUserName, registerClient} = textAreaSlice.actions;
 
