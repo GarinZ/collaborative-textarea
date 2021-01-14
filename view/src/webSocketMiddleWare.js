@@ -4,7 +4,7 @@ import {SocketIOAdapter, EditorClient} from './lib';
 
 const webSocketMiddleware = storeAPI =>  {
   const {dispatch, getState} = storeAPI;
-  const socket = io();
+  const socket = io(process.env.NODE_ENV === 'development' ? '/' : `http://garinzhang.com`);
   const textAreaAdapter = new TextAreaAdapter(storeAPI);
   socket
     .on('doc', ({str, revision, clients}) => {
