@@ -15,9 +15,9 @@ function UserName({userName, isLogin, onChange, onConfirm}) {
         isLogin
         ? <div className={styles.loginUserName}>NickName: {userName}</div>
         : (
-            <div>
+            <div className={styles.layout}>
                 <div className={styles.label}>What&#39;s yout nick name?</div>
-                <Input value={userName} onChange={onChange} onPressEnter={onEnter} placeholder={placeholderText} />
+                <Input value={userName} onChange={onChange} onPressEnter={onEnter} placeholder={placeholderText}/>
             </div>
         )
     );

@@ -55,6 +55,14 @@ export const textAreaSlice = createSlice({
       state.value = str;
       state.shadowValue = str;
       state.revision = revision;
+      if (Object.keys(clients).length !== 0) {
+        for (let clientId in clients) {
+          state.clients[clientId] = {
+            clientName: clients[clientId].name,
+            self: false
+          }
+        }
+      }
     },
     addPendingOperation: (state, action) => {
       state.pendingOperationQueue.push(action.payload);

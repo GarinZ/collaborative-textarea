@@ -1,0 +1,27 @@
+.clientList {
+    height: 100%;
+    text-align: left;
+    border-left: 1px solid rgb(234, 234, 234);
+    padding: 30px;
+}
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.status {
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    border: 1px solid green;
+    border-radius: 3px;
+    background-color: green;
+    position: relative;
+    top: -1px;
+    margin-right: 5px;
+}
+
+.clientListItem {
+    margin-bottom: 4px;
+}

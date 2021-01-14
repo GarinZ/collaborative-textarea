@@ -19,12 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 
 var io = socketIO(appServer);
 
-var str = "# This is a Markdown heading\n\n"
-        + "1. un\n"
-        + "2. deux\n"
-        + "3. trois\n\n"
-        + "Lorem *ipsum* dolor **sit** amet.\n\n"
-        + "    $ touch test.txt";
+var str = "# Welcom to Collaporative TextArea Demo";
 var socketIOServer = new EditorSocketIOServer(str, [], 'demo', function (socket, cb) {
   cb(!!socket.mayEdit);
 });
