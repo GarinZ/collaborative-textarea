@@ -4,12 +4,13 @@
  * 继承了Server.js
  * 运行在node.js之上
  */
-var EventEmitter     = require('events').EventEmitter;
-var TextOperation    = require('./text-operation');
+var EventEmitter = require('events').EventEmitter;
+var TextOperation = require('./text-operation');
 var WrappedOperation = require('./wrapped-operation');
-var Server           = require('./server');
-var Selection        = require('./selection');
-var util             = require('util');
+var Server = require('./server');
+var Selection = require('./selection');
+var util = require('util');
+const {DEFAULT_DOC} = require('../constants');
 
 function EditorSocketIOServer (document, operations, docId, mayWrite) {
   EventEmitter.call(this);
@@ -71,8 +72,12 @@ EditorSocketIOServer.prototype.addClient = function (socket) {
       self.onDisconnect(socket);
       if (
         (socket.manager && socket.manager.sockets.clients(self.docId).length === 0) || // socket.io <= 0.9
-        (socket.ns && Object.keys(socket.ns.connected).length === 0) // socket.io >= 1.0
+        (socket.ns && Object.keys(socket.ns.connected).length === 0) || // socket.io >= 1.0
+        (socket.nsp && socket.nsp.sockets.size === 0)
       ) {
+        // for sake of security, when room's empty, reset document and revision
+        self.document = DEFAULT_DOC;
+        self.revision = 0;
         self.emit('empty-room');
       }
     });

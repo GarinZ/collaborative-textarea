@@ -6,6 +6,7 @@ const socketIO = require('socket.io');
 const path = require('path');
 const http = require('http');
 const {EditorSocketIOServer} = require('./lib');
+const {DEFAULT_DOC} = require('./constants.js');
 const isDev = process.env.NODE_ENV === 'development';
 var app = express();
 var appServer = http.Server(app);
@@ -18,9 +19,7 @@ if (isDev) {
 }
 
 var io = socketIO(appServer);
-
-var str = "# Welcome to Collaborative TextArea Demo";
-var socketIOServer = new EditorSocketIOServer(str, [], 'demo', function (socket, cb) {
+var socketIOServer = new EditorSocketIOServer(DEFAULT_DOC, [], 'demo', function (socket, cb) {
   cb(!!socket.mayEdit);
 });
 io.sockets.on('connection', function (socket) {
