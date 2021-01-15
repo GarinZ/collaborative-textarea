@@ -29,4 +29,5 @@ yarn start
 ## TODO
 - [x] support real-time plain text collaborativly editing
 - [x] support display attendees list and enter/quit notification
-- [ ] support markdown syntax highlight and preview
+- [ ] support undo management
+- [ ] support markdown synatx operational transformation and preview
