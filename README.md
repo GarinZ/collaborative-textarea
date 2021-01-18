@@ -1,5 +1,6 @@
 # Collaborative-Textarea
 A text area supporting real-time collaborative editing plain text. And display all the online attendees.
+See Also：[How to implemente Collaborative Document - CHS](http://garinzhang.com/coding/how-to-implemente-collaborative-editing-understanding-operational-transformation.html)
 ![](https://garinzhang-blog.oss-cn-beijing.aliyuncs.com/2021-01-14-140733.png)
 ## Online Demo
 [Collaborative-Textarea-Online-Demo](http://garinzhang.com/collaborative-textarea/)
